@@ -416,6 +416,9 @@ void game() {
             }
         }
         turn++;
+        if (i == 9) {
+            cout << "\n\nThe game ends in a tie" << endl;
+        }
     }
 
 
