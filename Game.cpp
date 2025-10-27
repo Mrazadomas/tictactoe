@@ -511,7 +511,7 @@ class Game {
             if (tileCheck(rtc)) {
                 gameboard[rtc] = p2;
             } else {
-                fillTile();
+                fillTile(p1, p2);
             }
         } else {
             int rt = getTile(); //requested tile
@@ -519,7 +519,7 @@ class Game {
             if (tileCheck(rtc)) {
                 gameboard[rtc] = p1;
             } else {
-                fillTile();
+                fillTile(p1, p2);
             }
         }
         cout << "\n" << endl;
