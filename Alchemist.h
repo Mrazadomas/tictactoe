@@ -2,7 +2,7 @@
 #define ALCHEMIST_H
 #include <iostream>
 #include <vector>
-#include "Game.hpp" 
+#include "Game.h" 
 
 
 using namespace std;

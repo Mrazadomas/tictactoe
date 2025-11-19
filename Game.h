@@ -2,8 +2,8 @@
 #define GAME_H
 #include <iostream>
 #include <vector>
-#include "Alchemist.hpp"
-#include "Paladin.hpp"
+#include "Alchemist.h"
+#include "Paladin.h"
 
 using namespace std;
 
