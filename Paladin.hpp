@@ -2,7 +2,7 @@
 #define PALADIN_H
 #include <iostream>
 #include <vector>
-#include "Game.cpp"
+#include "Game.hpp"
 
 using namespace std;
 
