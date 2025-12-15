@@ -69,7 +69,7 @@ class Game {
     // vector<int> win7 = {1, 14, 27};
     // vector<int> win8 = {7, 14, 21};
 
-    private: int checkWinx() {
+    public: int checkWinx() {
         vector<int> xTiles;
         for (int i = 0; i < gameboard.size(); i++) {
             if (gameboard[i] == "x") {
@@ -183,7 +183,7 @@ class Game {
         return 0;
     }
 
-    private: int checkWin(string mark) { // for custom marks
+    public: int checkWin(string mark) { // for custom marks
         vector<int> xTiles;
         for (int i = 0; i < gameboard.size(); i++) {
             if (gameboard[i] == mark) {
@@ -297,7 +297,7 @@ class Game {
         return 0;
     }
 
-    private: int checkWino() {
+    public: int checkWino() {
         vector<int> xTiles;
         for (int i = 0; i < gameboard.size(); i++) {
             if (gameboard[i] == "o") {
@@ -462,7 +462,7 @@ class Game {
         return true;
     }
 
-    private: bool boardFull() {
+    public: bool boardFull() {
         int count = 0;
         for (int i = 1; i < 10; i++) {
         if (gameboard[tileConversion(i)] != " ") {
@@ -475,14 +475,14 @@ class Game {
         return false;
     }
 
-    private: void fillTile() { //t for tile
+    public: void fillTile(int turn) { //t for tile
         if ((turn % 2) == 0) {
             int rt = getTile(); //requested tile
             int rtc = tileConversion(rt); //requested tile converted
             if (tileCheck(rtc)) {
                 gameboard[rtc] = "x";
             } else {
-                fillTile();
+                fillTile(turn);
             }
         } else {
             int rt = getTile(); //requested tile
@@ -490,7 +490,7 @@ class Game {
             if (tileCheck(rtc)) {
                 gameboard[rtc] = "o";
             } else {
-                fillTile();
+                fillTile(turn);
             }
         }
         cout << "\n" << endl;
@@ -504,7 +504,7 @@ class Game {
         
     }
 
-    private: void fillTile(string p1, string p2) { // overloaded fill tile for custom marks
+    public: void fillTile(string p1, string p2) { // overloaded fill tile for custom marks
         if ((turn % 2) == 0) {
             int rt = getTile(); //requested tile
             int rtc = tileConversion(rt); //requested tile converted
@@ -533,7 +533,7 @@ class Game {
         
     }
 
-    private: int getFilledTiles() {
+    public: int getFilledTiles() {
         int count = 0;
         for (int i = 0; i < cells.size(); i++) {
             int cell = cells[i];
@@ -603,7 +603,7 @@ class Game {
         getline(cin, temp1);
     };
 
-    private: string getArchetype() {
+    public: string getArchetype() {
         bool check = true;
         int temp;
         cout << "\nYou will now choose an Archetype." << endl;
@@ -629,7 +629,7 @@ class Game {
         return "Paladin";
     }
 
-    private: int getMove() {
+    public: int getMove() {
         bool check = true;
         int move;
         do {
@@ -697,7 +697,7 @@ class Game {
         getline(cin, temp1);
     }
 
-    private: void Regulargame() {
+    public: void Regulargame() {
         cout << "\n" << endl;
         for (int i = 0; i < gameboard.size(); i++) {
                 if ((i == 9) || (i == 19)) {
@@ -712,7 +712,7 @@ class Game {
             } else {
                 cout << "\n\n" << p2 << "'s turn." << endl;
             }
-            fillTile();
+            fillTile(turn);
             if ((turn > 4)) {
                 if ((turn % 2) == 0) {
                     if (checkWinx() == 1) {
@@ -737,7 +737,6 @@ class Game {
     }
 
     private: void Battlegame() {
-        cout << p1Arch << ", " << p2Arch << endl;
         cout << "\n" << endl;
         for (int i = 0; i < gameboard.size(); i++) {
                 if ((i == 9) || (i == 19)) {
@@ -815,7 +814,7 @@ class Game {
         return false;
     }
 
-    private: void clear() {
+    public: void clear() {
         gameboard = clearboard;
         p1 = "";
         p2 = "";
@@ -823,6 +822,59 @@ class Game {
         p2mark = "";
         p1Arch = "";
         p2Arch = "";
+    }
+
+    public: void campaignGame() {
+        for (int i = 0; i < gameboard.size(); i++) {
+                if ((i == 9) || (i == 19)) {
+                    cout << "\n" << gameboard[i] << endl;
+                } else {
+                    cout << gameboard[i];
+                }
+        }
+        int move = 0;
+        do {
+            if ((turn == 1) || ((turn % 2) == 1)) {
+                cout << "\n\n" << p1 << "'s turn." << endl;
+                move = getMove();
+            } else {
+                cout << "\n\n" << p2 << "'s turn." << endl;
+                move = getMove();
+            }
+            if (move == 1) {
+                fillTile(p1mark, p2mark);
+            } else if (move == 2) {
+                if ((turn == 1) || ((turn % 2) == 1)) {
+                    if (p1Arch == "Alchemist") {
+                        gameboard = alchemist.ability(gameboard);
+                    } else {
+                        gameboard = paladin.ability(gameboard);
+                    }
+                } else {
+                    if (p2Arch == "Alchemist") {
+                        gameboard = alchemist.ability(gameboard);
+                    } else {
+                        gameboard = paladin.ability(gameboard);
+                    }
+                }
+            }
+            if ((turn > 4)) {
+                if ((turn % 2) == 0) {
+                    if (checkWin(p2mark) == 1) {
+                        cout << "\n\n" << p2 << " has won the game.\n" << endl;
+                        break;
+                    }
+                } else {
+                    if (checkWin(p1mark) == 1) {
+                        cout << "\n\n" << p1 << " has won the game.\n" << endl;
+                        break;
+                    }
+                }
+            }
+            turn++;
+        } while (!(boardFull()));
+        cout << "\n\nThe game ends in a tie." << endl;
+        gameboard.clear();
     }
 
     public: void startGame() {

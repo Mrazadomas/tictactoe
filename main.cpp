@@ -1,11 +1,14 @@
 #include <iostream>
 #include "Game.h"
+#include "campaign.h"
 
 using namespace std;
 
 int main() {
-    Game game;
-    game.startGame();
+    
+    Campaign game;
+    game.campaignGame();
+
 }
 
 
