@@ -159,9 +159,10 @@ class Campaign {
                     move = game.getMove();
                 } else {
                     cout << "\n\n" << bot.getName() << "'s turn." << endl;
-                    if (((h <= 150) && (abcount == 0)) || ((h <= 50) && (abcount == 1))) {
+                    if (((h <= 150) && (abcount == 0) && (turn > 4)) || ((h <= 50) && (abcount == 1) && (turn > 4))) {
                         cout << "\nIn a fit of rage, Kaido uses Thunder Bagua." << endl;
                         game.gameboard = thunderBagua(game.gameboard);
+                        count++;
                     } else {
                         game.gameboard = bot.botMove(game.gameboard, "x");
                     }
