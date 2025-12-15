@@ -63,10 +63,7 @@ class Bot {
         
             srand(time(0));
             int index = (rand() % (openTiles.size()));
-            cout << openTiles.size() << endl;
-            cout << index << endl;
             gameboard[openTiles[index]] = mark;
-            cout << openTiles[index] << endl;
 
             cout << "\n" << endl;
             for (int i = 0; i < gameboard.size(); i++) {
